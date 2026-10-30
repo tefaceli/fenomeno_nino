@@ -1,0 +1,39 @@
+# El repo es público: solo lleva lo necesario para que corran los cron (workflows, scripts y sus
+# insumos), el historial de descargas y los productos publicados en data/out/ y parroquias/.
+# Todo lo demás queda solo en la carpeta local y se entrega al equipo por correo.
+
+# Sistema y Python
+.DS_Store
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+Thumbs.db
+desktop.ini
+
+# Secretos: solo por variables de entorno
+.env
+
+# Documentos internos de Primicias
+CLAUDE.md
+project_status.md
+metodologia.md
+guia_equipo.md
+
+# Procesamiento de una sola vez, pruebas y documentación de las fuentes
+**/notebooks/
+**/docs/
+
+# Intermedios y archivos de revisión
+**/data/interim/
+
+# Insumos de procesamientos de una sola vez (su producto ya está en data/out/)
+inundaciones/data/raw/
+mm/data/raw/
+marea/data/raw/
+
+# Historial: en git van solo los crudos comprimidos, nunca sin comprimir
+**/data/raw/**/*.txt
+
+# Temporales que los scripts escriben antes de reemplazar el archivo final
+*.tmp
