@@ -67,6 +67,13 @@ faltan = [c for c in LLAVE + ["evento", "personasAfectadas", "personasDamnificad
 if faltan:
     print("ERROR: a los eventos de Alístate les faltan campos:", faltan, file=sys.stderr)
     sys.exit(1)
+
+# Eventos a más de 5 km de toda parroquia (Alístate los marca "sin parroquia"): se dejan fuera de la ficha con un aviso
+sin_parroquia = eventos["codpro"].isna() | eventos["codpar"].isna()
+if sin_parroquia.any():
+    print("AVISO: se dejan fuera eventos sin parroquia:", eventos.loc[sin_parroquia, ["id_evento", "evento", "lat", "lon"]].values.tolist())
+eventos = eventos[~sin_parroquia].reset_index(drop=True)
+
 fuera = ~pd.Series(list(zip(eventos["codpro"], eventos["codpar"]))).isin(llaves["inundaciones"])
 if fuera.any():
     print("ERROR: eventos de Alístate con una parroquia que no existe:", eventos.loc[fuera.values, LLAVE].values.tolist(), file=sys.stderr)
