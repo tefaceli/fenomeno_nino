@@ -106,7 +106,7 @@ tabla = inundaciones[LLAVE + ["provincia", "canton", "parroquia", "zona_en_estud
     columns={"categoria": "inundaciones", "evaluacion_parcial": "inundaciones_parcial"})
 tabla = tabla.merge(movimientos_masa[LLAVE + ["categoria", "evaluacion_parcial"]].rename(
     columns={"categoria": "movimientos_masa", "evaluacion_parcial": "movimientos_masa_parcial"}), on=LLAVE)
-tabla = tabla.merge(inamhi[LLAVE + ["nivel", "zona_propensa_crecidas"]], on=LLAVE)
+tabla = tabla.merge(inamhi[LLAVE + ["nivel"]], on=LLAVE)
 tabla = tabla.merge(personas, on=LLAVE, how="left")
 tabla = tabla.merge(aguajes[LLAVE + ["fecha_hora", "altura_m", "estacion", "estacion_nombre", "distancia_km"]], on=LLAVE, how="left")
 tabla[["personasAfectadas", "personasDamnificadas"]] = tabla[["personasAfectadas", "personasDamnificadas"]].fillna(0).astype(int)
@@ -120,7 +120,7 @@ registros = [
     {
         "codpro": r.codpro, "codpar": r.codpar, "provincia": r.provincia, "canton": r.canton, "parroquia": r.parroquia,
         "zona_en_estudio": bool(r.zona_en_estudio),
-        "inamhi": {"nivel": r.nivel, "zona_propensa_crecidas": bool(r.zona_propensa_crecidas)},
+        "inamhi": {"nivel": r.nivel},
         "inundaciones": {"categoria": r.inundaciones, "evaluacion_parcial": bool(r.inundaciones_parcial)},
         "movimientos_masa": {"categoria": r.movimientos_masa, "evaluacion_parcial": bool(r.movimientos_masa_parcial)},
         "eventos": {
