@@ -50,3 +50,12 @@ jobs:
           git commit -m "ficha: tras inamhi $(TZ=America/Guayaquil date +'%Y-%m-%d %H:%M')"
           git pull --rebase
           git push
+
+      # Va al final: los datos ya quedaron publicados. Sale en rojo si inamhi.py vio una señal de que
+      # el INAMHI cambió su escala (severidad o tipo de evento nuevos) para que alguien lo revise.
+      - name: Avisar si hay que revisar la escala del INAMHI
+        run: |
+          if [ -f "$RUNNER_TEMP/inamhi_revisar.txt" ]; then
+            cat "$RUNNER_TEMP/inamhi_revisar.txt"
+            exit 1
+          fi
